@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-navy: #19376D;
+  --color-cream: #EEE4D8;
+  --font-display: var(--font-aref-ruqaa), serif;
+  --font-body: var(--font-cairo), sans-serif;
+}
+
+body {
+  @apply bg-cream text-navy font-body selection:bg-navy selection:text-cream;
+}
