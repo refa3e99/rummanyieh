@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import type { MenuCategory, MenuItem } from '@/lib/menuData';
 
@@ -58,6 +58,17 @@ export default function MenuSection({ categories }: { categories: MenuCategory[]
     setSelectedItem(item);
     setSelectedVariantId(item.variants[0]?.id || null);
   };
+
+  useEffect(() => {
+    if (selectedItem) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedItem]);
 
   const filteredCategories = activeCategory === 'all' 
     ? categories 
@@ -168,7 +179,7 @@ export default function MenuSection({ categories }: { categories: MenuCategory[]
             onClick={() => setSelectedItem(null)}
           ></div>
           
-          <div className="relative z-10 w-full max-w-lg bg-cream rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-lg rounded-bl-lg overflow-hidden border-2 border-navy animate-in zoom-in-95 duration-200">
+          <div className="relative z-10 w-full max-w-lg bg-cream rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-lg rounded-bl-lg overflow-hidden border-2 border-navy animate-in zoom-in-95 duration-200 max-h-[95vh] overflow-y-auto flex flex-col">
             <button 
               onClick={() => setSelectedItem(null)}
               className="absolute top-4 start-4 z-20 w-10 h-10 bg-cream/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-navy/30 text-navy hover:bg-navy hover:text-cream transition-colors shadow-sm"
@@ -177,7 +188,7 @@ export default function MenuSection({ categories }: { categories: MenuCategory[]
               ✕
             </button>
             
-            <div className="relative w-full h-64 sm:h-80">
+            <div className={`relative w-full shrink-0 ${selectedItem.variants.length > 1 ? 'h-48 sm:h-56' : 'h-64 sm:h-80'}`}>
               <MenuItemImage 
                 src={selectedItem.variants.find(v => v.id === selectedVariantId)?.image || selectedItem.variants[0]?.image || ''} 
                 alt={selectedItem.name} 
@@ -187,14 +198,14 @@ export default function MenuSection({ categories }: { categories: MenuCategory[]
               <div className="absolute inset-0 bg-gradient-to-t from-cream/20 to-transparent"></div>
             </div>
             
-            <div className="p-8 sm:p-10 text-center space-y-6">
-              <h3 className="font-display text-4xl text-navy">{selectedItem.name}</h3>
-              <div className="h-px w-16 bg-navy mx-auto"></div>
-              <p className="text-navy/80 text-lg md:text-xl leading-relaxed">
+            <div className={`text-center overflow-y-auto ${selectedItem.variants.length > 1 ? 'p-6 sm:p-8 space-y-4' : 'p-8 sm:p-10 space-y-6'}`}>
+              <h3 className={`font-display text-navy ${selectedItem.variants.length > 1 ? 'text-3xl' : 'text-4xl'}`}>{selectedItem.name}</h3>
+              <div className="h-px w-16 bg-navy mx-auto shrink-0"></div>
+              <p className={`text-navy/80 leading-relaxed ${selectedItem.variants.length > 1 ? 'text-base md:text-lg' : 'text-lg md:text-xl'}`}>
                 {selectedItem.description}
               </p>
               
-              <div className="pt-4 flex flex-col items-center justify-center gap-4">
+              <div className={`pt-2 flex flex-col items-center justify-center ${selectedItem.variants.length > 1 ? 'gap-2' : 'gap-4'}`}>
                 {selectedItem.variants.map((variant) => {
                   const isMultiple = selectedItem.variants.length > 1;
                   const isSelected = selectedVariantId === variant.id;
@@ -204,16 +215,16 @@ export default function MenuSection({ categories }: { categories: MenuCategory[]
                       <button 
                         key={variant.id} 
                         onClick={() => setSelectedVariantId(variant.id)}
-                        className={`flex items-center justify-between flex-row-reverse w-full max-w-xs border transition-colors p-4 rounded-tl-2xl rounded-br-2xl rounded-tr-sm rounded-bl-sm ${
+                        className={`flex items-center justify-between flex-row-reverse w-full max-w-xs border transition-colors p-3 rounded-tl-xl rounded-br-xl rounded-tr-sm rounded-bl-sm ${
                           isSelected 
                             ? 'bg-navy border-navy text-cream' 
                             : 'bg-navy/5 border-navy/10 text-navy hover:bg-navy/10'
                         }`}
                       >
-                         <span className={`font-bold text-xl ${isSelected ? 'text-cream' : 'text-navy'}`}>
+                         <span className={`font-bold text-lg ${isSelected ? 'text-cream' : 'text-navy'}`}>
                            {variant.name}
                          </span>
-                         <span className={`font-display text-2xl ${isSelected ? 'text-cream' : 'text-navy'}`}>
+                         <span className={`font-display text-xl ${isSelected ? 'text-cream' : 'text-navy'}`}>
                            {toArabicNumerals(variant.price)} د.أ
                          </span>
                       </button>
