@@ -15,8 +15,8 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: 'رُمّانية | شاورما وبرغر',
-  description: 'مطعم رُمّانية - أصالة الطعم في الشاورما والبرغر',
+  title: 'رُمّانية | شاورما و بروستد',
+  description: 'مطعم رُمّانية - أصالة الطعم في الشاورما والبروستد',
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

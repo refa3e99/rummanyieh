@@ -18,24 +18,49 @@ function MenuItemImage({
   sizes?: string;
 }) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [prevSrc, setPrevSrc] = useState(src);
 
-  const fallbackUrl = 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80';
+  if (src !== prevSrc) {
+    setPrevSrc(src);
+    setIsLoading(true);
+    setFailedSrc(null);
+  }
+
   const isFailed = failedSrc === src;
-  const currentSrc = isFailed ? fallbackUrl : (src || fallbackUrl);
-
+  
   return (
-    <Image
-      src={currentSrc}
-      alt={alt}
-      fill
-      sizes={sizes}
-      priority={priority}
-      className={className}
-      onError={() => {
-        setFailedSrc(src);
-      }}
-      referrerPolicy="no-referrer"
-    />
+    <>
+      {(isLoading || isFailed || !src) && (
+        <div className={`absolute inset-0 bg-cream flex items-center justify-center ${isLoading && !isFailed && src ? 'animate-pulse' : ''}`}>
+          <div className="relative w-full h-full p-4 md:p-6 opacity-30 flex items-center justify-center">
+             <Image 
+                src="/images/rummaniyehLogo.svg"
+                alt="Loading..."
+                fill
+                className="object-contain"
+             />
+          </div>
+        </div>
+      )}
+      
+      {!isFailed && src && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={`${className || ''} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}
+          onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setFailedSrc(src);
+            setIsLoading(false);
+          }}
+          referrerPolicy="no-referrer"
+        />
+      )}
+    </>
   );
 }
 

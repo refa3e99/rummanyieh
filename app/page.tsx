@@ -9,7 +9,7 @@ const locations = [
     name: 'ضاحية الرشيد',
     address: 'شارع عاكف الفايز، ضاحية الرشيد، عمّان.',
     hours: '١١:٠٠ ص - ٣:٠٠ ص',
-    phone: '+962 7 9300 3400 | +962 6 515 988',
+    phone: '+962793003400',
     mapUrl: '/images/storePic.jpeg'
   }
 ];
@@ -47,7 +47,7 @@ export default function Home() {
             </h1>
             
             <p className="font-body text-xl md:text-3xl text-cream/90 max-w-2xl mx-auto mb-16 leading-relaxed">
-              نقدم لكم ألذ أنواع الشاورما والبرغر المحضرة يومياً بخبز الصاج الطازج واللحوم البلدية
+              نقدم لكم ألذ أنواع الشاورما
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 md:mb-24">
@@ -56,7 +56,7 @@ export default function Home() {
               </a>
               
               <a href="#locations" className="bg-transparent border-2 border-cream text-cream hover:bg-cream hover:text-navy px-12 py-4 font-display text-2xl w-full sm:w-auto min-w-[200px] transition-colors duration-300">
-                فروعنا
+                موقعنا
               </a>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function Home() {
         {/* LOCATIONS SECTION */}
         <section id="locations" className="py-20 px-6 max-w-7xl mx-auto mb-20">
           <div className="text-center mb-16 space-y-6">
-            <h2 className="font-display text-5xl md:text-7xl text-navy">فروعنا</h2>
+            <h2 className="font-display text-5xl md:text-7xl text-navy">موقعنا</h2>
             <div className="h-px w-24 bg-navy mx-auto"></div>
           </div>
           
@@ -103,14 +103,13 @@ export default function Home() {
                         <div className="w-2 h-2 rounded-full bg-navy shrink-0"></div>
                         <p dir="ltr" className="text-right">{loc.hours}</p>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-navy shrink-0"></div>
-                        <p dir="ltr" className="text-right font-display text-xl">{loc.phone}</p>
-                      </div>
                     </div>
                   </div>
                   
-                  <div className="mt-10 pt-8 border-t border-navy/20">
+                  <div className="mt-10 pt-8 border-t border-navy/20 flex flex-col gap-4">
+                    <a href={`tel:${loc.phone.replace(/\s+/g, '')}`} className="inline-flex items-center justify-center w-full py-4 bg-navy text-cream font-display text-2xl hover:bg-navy/90 transition-colors group">
+                      <span>اتصل بنا</span>
+                    </a>
                     <a href="https://maps.app.goo.gl/zCASxB4mX8U2wdG27?g_st=ic" className="inline-flex items-center justify-center w-full py-4 border-2 border-navy text-navy font-display text-2xl hover:bg-navy hover:text-cream transition-colors group">
                       <span>الاتجاهات</span>
                       <span className="mr-3 transition-transform group-hover:-translate-x-2">←</span>
@@ -126,10 +125,16 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="bg-navy text-cream py-16 border-t-4 border-double border-cream/20">
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center space-y-8">
-          <h2 className="font-display text-5xl">رُمّانية</h2>
+          <Image 
+            src="/images/rummaniyehLogo.svg" 
+            alt="رُمّانية" 
+            width={240} 
+            height={90} 
+            className="w-auto h-20 md:h-24 brightness-0 invert opacity-90"
+          />
           <div className="w-32 h-px bg-cream/30"></div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-cream/70 text-lg">رُمّانية • جميع الحقوق محفوظة © ٢٠٢٤</p>
+            <p className="text-cream/70 text-lg">رُمّانية • جميع الحقوق محفوظة © ٢٠٢٦</p>
             <p className="text-cream/50 text-sm font-sans tracking-wide">
               Designed & developed by{' '}
               <a href="https://web-design-studio-zeta.vercel.app/" target="_blank" rel="noopener noreferrer" className="underline hover:text-cream transition-colors">
